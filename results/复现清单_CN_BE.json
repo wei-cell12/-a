@@ -1,0 +1,25 @@
+{
+  "command": "python q1_solver.py",
+  "python": "3.9.9",
+  "numpy": "2.0.2",
+  "scipy": "1.13.1",
+  "inputs": {
+    "附件\\附件1.xlsx": "7ef32870abeef420b89560b2530ff60dfe4255917805151d89988d0311af9dd7",
+    "附件\\附件3\\result1.xlsx": "23b261b295c1b787d000eebbca6521c37075107b6fcf78724f8d395ce1798ff4"
+  },
+  "code": {
+    "q1_solver.py": "fd49208488ae40cf462693fd543bdf8506b5024e12d4351a078945437e2a5bcd",
+    "q1_cn_comparison.py": "766c2fd4ee427ac466565a3e906558caecbc3455c191fd713fa0618c629652c3"
+  },
+  "transcribed_reference": {
+    "results/问题1_论文截图逐点对比.csv": "6b04c56cf8f04cacca87c5b9707ef7ad908126c54f1b17dce1a55e89aabf40c8",
+    "note": "截图数值由用户提供图片人工转录，仅作比较，不作为模型输入"
+  },
+  "outputs": [
+    "results/result1.xlsx",
+    "results/result1_CN.xlsx",
+    "results/result1_BE.xlsx"
+  ],
+  "random_seed": null,
+  "deterministic": true
+}
