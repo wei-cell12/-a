@@ -1,4 +1,8 @@
-# 问题二结果文件说明
+# 2026 数学建模 A 题——问题二计算结果
+
+论文正文见：[Q2_paper_section.md](Q2_paper_section.md)。
+
+本目录可独立运行，不依赖 `question1/` 中的代码或数据。
 
 - `Q2_paper_section.md`：可直接交给论文手使用的第二问正文。
 - `results/result2.xlsx`：题目要求的完整结果，两个工作表均为 10801 行×22 列。

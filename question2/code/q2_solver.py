@@ -11,15 +11,13 @@ import time
 import zipfile
 from dataclasses import dataclass
 from pathlib import Path
-from xml.etree import ElementTree as ET
-
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.interpolate import Akima1DInterpolator, CubicSpline, PchipInterpolator
 from scipy.linalg import solve_banded
 from scipy.optimize import root
 
-import 问题1_求解 as xlsx_utils
-from q1_cn_comparison import apply_tridiagonal, make_interpolator
+import xlsx_helpers as xlsx_utils
 from utils.plot_style import COLOR_SEQUENCE, PALETTE, apply_publication_style
 
 
@@ -36,6 +34,26 @@ END_TIME = 10800.0
 KEY_TIMES = np.arange(1800.0, END_TIME + 1.0, 1800.0)
 KEY_RADII_CM = np.array([0.0, 0.5, 1.0, 1.5, 2.0])
 OUTPUT_RADII_CM = np.round(np.arange(0.0, 2.0001, 0.1), 10)
+
+
+def make_interpolator(x: np.ndarray, y: np.ndarray, method: str):
+    if method == "linear":
+        return lambda z: np.interp(z, x, y)
+    if method == "pchip":
+        return PchipInterpolator(x, y, extrapolate=True)
+    if method == "cubic":
+        return CubicSpline(x, y, bc_type="natural", extrapolate=True)
+    if method == "akima":
+        return Akima1DInterpolator(x, y)
+    raise ValueError(f"未知插值方法: {method}")
+
+
+def apply_tridiagonal(lower: np.ndarray, diagonal: np.ndarray,
+                      upper: np.ndarray, values: np.ndarray) -> np.ndarray:
+    result = diagonal * values
+    result[1:] += lower[1:] * values[:-1]
+    result[:-1] += upper[:-1] * values[1:]
+    return result
 
 
 @dataclass(frozen=True)
@@ -121,7 +139,7 @@ def theta_solve(old: np.ndarray, op_old: tuple[np.ndarray, ...], op_new: tuple[n
 
 def load_environment() -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     path = DATA / "附件1.xlsx"
-    rows = xlsx_utils._xlsx_rows(path)
+    rows = xlsx_utils.xlsx_rows(path)
     values = np.asarray([[float(v) for v in row[:3]] for row in rows[1:]], dtype=float)
     if values.shape != (241, 3) or values[0, 0] != 0 or values[-1, 0] != 14400:
         raise ValueError("附件1结构或时间范围不符合题目说明")
