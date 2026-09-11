@@ -116,6 +116,22 @@ def make_convergence_figure() -> None:
     export_sized(fig, "process_q1_cn_convergence", (7.2, 5.4))
 
 
+def make_temperature_3d() -> None:
+    time_s, radius_cm, field = load_matrix(RESULTS / "问题1_CN_完整温度.csv")
+    stride = 10
+    radius_grid, time_grid = np.meshgrid(radius_cm, time_s[::stride])
+    fig = plt.figure(layout="constrained")
+    ax = fig.add_subplot(111, projection="3d")
+    surface = ax.plot_surface(radius_grid, time_grid, field[::stride], cmap="coolwarm",
+                              linewidth=0, antialiased=True, rcount=120, ccount=21)
+    ax.set(xlabel="到药材中心的距离（cm）", ylabel="时间（s）", zlabel="温度（℃）",
+           title="药材温度场三维时空分布")
+    ax.view_init(elev=28, azim=-128)
+    colorbar = fig.colorbar(surface, ax=ax, shrink=0.68, pad=0.08)
+    colorbar.set_label("温度（℃）")
+    export_sized(fig, "paper_q1_cn_temperature_3d", (7.2, 5.4))
+
+
 def export_sized(fig: plt.Figure, name: str, size: tuple[float, float]) -> None:
     fig.set_size_inches(*size)
     fig.savefig(FIGURES / f"{name}.svg")
@@ -126,11 +142,12 @@ def export_sized(fig: plt.Figure, name: str, size: tuple[float, float]) -> None:
 def main() -> None:
     apply_publication_style()
     FIGURES.mkdir(exist_ok=True)
-    make_triptych("问题1_CN_完整温度.csv", "温度", "℃", "inferno", "paper_q1_cn_temperature")
+    make_triptych("问题1_CN_完整温度.csv", "温度", "℃", "coolwarm", "paper_q1_cn_temperature")
     make_triptych("问题1_CN_完整水分浓度.csv", "干基含水率", "kg/kg", "viridis", "paper_q1_cn_moisture")
     make_interpolation_figures()
     make_method_difference_figure()
     make_convergence_figure()
+    make_temperature_3d()
 
 
 if __name__ == "__main__":

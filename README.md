@@ -17,6 +17,12 @@
 
 ![温度场三联图](figures/paper_q1_cn_temperature.png)
 
+二维时空图采用“低温蓝—高温红”渐变。另提供三维展示图：
+
+![温度场三维曲面](figures/paper_q1_cn_temperature_3d.png)
+
+建议论文正文使用二维三联图，三维曲面用于附录或答辩展示。
+
 ### 水分场
 
 ![水分场三联图](figures/paper_q1_cn_moisture.png)
@@ -66,4 +72,3 @@ data/       问题一所需输入与输出模板
 figures/    论文用中文 PNG/SVG
 results/    Excel、CSV 和校验摘要
 ```
-
