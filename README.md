@@ -1,4 +1,21 @@
-# 2026 数学建模 A 题——问题一计算结果
+# 2026 数学建模 A 题——问题一、问题二计算结果
+
+## 问题二
+
+问题二已完成变物性热湿耦合求解。正式方法为守恒型径向有限体积法、Crank–Nicolson 时间推进和 Picard 非线性迭代，内部采用 `N=200`、`dt=0.5 s`，按题目要求输出每 1 s、每 0.1 cm 的完整结果。
+
+- 论文正文：[Q2_paper_section.md](Q2_paper_section.md)
+- 结果说明：[Q2_results_guide.md](Q2_results_guide.md)
+- 提交表格：[results/result2.xlsx](results/result2.xlsx)
+- 求解代码：[code/q2_solver.py](code/q2_solver.py)
+
+运行：
+
+```powershell
+python code/q2_solver.py
+```
+
+以下原有内容为问题一结果。
 
 本目录包含问题一的 Crank–Nicolson（CN）正式结果、后向欧拉（BE）对照结果、论文用中文图片、表格和可复现代码。
 
