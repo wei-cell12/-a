@@ -634,7 +634,8 @@ def full_main(no_figures: bool) -> dict:
         "inputs": {str(environment_file.relative_to(ROOT)): sha256(environment_file),
                    str(template_file.relative_to(ROOT)): sha256(template_file)},
         "code": {"code/q1_solver.py": sha256(ROOT / "code" / "q1_solver.py"),
-                 "code/q1_cn_comparison.py": sha256(ROOT / "code" / "q1_cn_comparison.py")},
+                 "code/q1_cn_comparison.py": sha256(ROOT / "code" / "q1_cn_comparison.py"),
+                 "code/问题1_求解.py": sha256(ROOT / "code" / "问题1_求解.py")},
         "transcribed_reference": {
             "results/问题1_论文截图逐点对比.csv": sha256(RESULTS / "问题1_论文截图逐点对比.csv"),
             "note": "截图数值由用户提供图片人工转录，仅作比较，不作为模型输入",

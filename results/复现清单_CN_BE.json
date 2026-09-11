@@ -1,15 +1,16 @@
 {
-  "command": "python q1_solver.py",
+  "command": "python code/q1_solver.py",
   "python": "3.9.9",
   "numpy": "2.0.2",
   "scipy": "1.13.1",
   "inputs": {
-    "附件\\附件1.xlsx": "7ef32870abeef420b89560b2530ff60dfe4255917805151d89988d0311af9dd7",
-    "附件\\附件3\\result1.xlsx": "23b261b295c1b787d000eebbca6521c37075107b6fcf78724f8d395ce1798ff4"
+    "data\\附件1.xlsx": "7ef32870abeef420b89560b2530ff60dfe4255917805151d89988d0311af9dd7",
+    "data\\附件3\\result1.xlsx": "23b261b295c1b787d000eebbca6521c37075107b6fcf78724f8d395ce1798ff4"
   },
   "code": {
-    "q1_solver.py": "fd49208488ae40cf462693fd543bdf8506b5024e12d4351a078945437e2a5bcd",
-    "q1_cn_comparison.py": "766c2fd4ee427ac466565a3e906558caecbc3455c191fd713fa0618c629652c3"
+    "code/q1_solver.py": "fd49208488ae40cf462693fd543bdf8506b5024e12d4351a078945437e2a5bcd",
+    "code/q1_cn_comparison.py": "80ba50d4590a4efb70e2dd38f00134ef52531c9134f96695e7e25cee4588e3be",
+    "code/问题1_求解.py": "a64773055063dad45d40d17674a2616bb982c4ba9b6181563de569029efc7a65"
   },
   "transcribed_reference": {
     "results/问题1_论文截图逐点对比.csv": "6b04c56cf8f04cacca87c5b9707ef7ad908126c54f1b17dce1a55e89aabf40c8",

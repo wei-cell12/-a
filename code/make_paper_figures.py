@@ -4,6 +4,9 @@
 from pathlib import Path
 import sys
 
+import matplotlib
+matplotlib.use("Agg")
+matplotlib.rcParams["svg.hashsalt"] = "cumcm-2026-q1"
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -27,7 +30,7 @@ def load_matrix(path: Path) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
 
 def export(fig: plt.Figure, name: str) -> None:
     fig.set_size_inches(7.2, 7.2)
-    fig.savefig(FIGURES / f"{name}.svg")
+    fig.savefig(FIGURES / f"{name}.svg", metadata={"Date": None})
     fig.savefig(FIGURES / f"{name}.png", dpi=300)
     plt.close(fig)
 
@@ -67,19 +70,41 @@ def make_interpolation_figures() -> None:
     time_s, temperature, moisture = raw[:, 0], raw[:, 1], raw[:, 2]
     styles = ("-", "--", "-.", ":")
     labels = {"linear": "线性", "pchip": "PCHIP", "cubic": "自然三次样条", "akima": "Akima"}
-    for values, ylabel, output_name in (
-        (temperature, "烘房温度（℃）", "raw_q1_temperature_interpolation"),
-        (moisture, "烘房水分浓度（kg/kg）", "raw_q1_moisture_interpolation"),
+    for values, ylabel, difference_label, scale, output_name in (
+        (temperature, "烘房温度（℃）", "相对线性插值差值（℃）", 1.0,
+         "raw_q1_temperature_interpolation_detailed"),
+        (moisture, "烘房水分浓度（kg/kg）", r"相对线性插值差值（$\times 10^{-5}$ kg/kg）", 1.0e5,
+         "raw_q1_moisture_interpolation_detailed"),
     ):
-        fig, ax = plt.subplots(layout="constrained")
-        dense = np.linspace(time_s[0], time_s[-1], 1201)
+        # 0.1 s 的致密采样只用于平滑显示，不改变求解器的边界输入或数值结果。
+        dense = np.arange(time_s[0], time_s[-1] + 0.05, 0.1)
+        predictions = {
+            method: np.asarray(solver.make_interpolator(time_s, values, method)(dense), dtype=float)
+            for method in ("linear", "pchip", "cubic", "akima")
+        }
+        fig, (ax, difference_ax) = plt.subplots(
+            2, 1, sharex=True, layout="constrained", gridspec_kw={"height_ratios": [2.15, 1.0]}
+        )
         for index, method in enumerate(("linear", "pchip", "cubic", "akima")):
-            ax.plot(dense, solver.make_interpolator(time_s, values, method)(dense),
-                    color=COLOR_SEQUENCE[index], linestyle=styles[index], label=labels[method])
+            ax.plot(dense, predictions[method], color=COLOR_SEQUENCE[index],
+                    linestyle=styles[index], linewidth=1.35, label=labels[method])
         ax.scatter(time_s, values, s=12, color="black", zorder=5, label="附件实测点")
-        ax.set(xlabel="时间（s）", ylabel=ylabel, title="边界数据插值方法比较")
-        ax.legend(ncol=3)
-        export_sized(fig, output_name, (6.3, 3.9))
+        ax.set(ylabel=ylabel, title="边界数据插值方法比较：整体曲线与局部差值")
+        ax.legend(ncol=3, fontsize=7)
+
+        baseline = predictions["linear"]
+        for index, method in enumerate(("pchip", "cubic", "akima"), start=1):
+            difference_ax.plot(
+                dense, (predictions[method] - baseline) * scale,
+                color=COLOR_SEQUENCE[index], linestyle=styles[index], linewidth=1.15,
+                label=labels[method],
+            )
+        difference_ax.axhline(0.0, color="0.25", linewidth=0.7)
+        difference_ax.set(xlabel="时间（s）", ylabel=difference_label,
+                          title="局部放大：各平滑插值减去线性插值")
+        difference_ax.legend(ncol=3, fontsize=7)
+        difference_ax.margins(x=0)
+        export_sized(fig, output_name, (7.2, 5.8))
 
 
 def make_method_difference_figure() -> None:
@@ -116,6 +141,20 @@ def make_convergence_figure() -> None:
     export_sized(fig, "process_q1_cn_convergence", (7.2, 5.4))
 
 
+def make_surface_center_gap_figure() -> None:
+    """展示预热过程中表面与中心梯度的形成，作为求解过程证据。"""
+    time_s, _, temperature = load_matrix(RESULTS / "问题1_CN_完整温度.csv")
+    _, _, moisture = load_matrix(RESULTS / "问题1_CN_完整水分浓度.csv")
+    fig, axes = plt.subplots(1, 2, layout="constrained")
+    axes[0].plot(time_s, temperature[:, -1] - temperature[:, 0], color=PALETTE["primary"])
+    axes[0].set(xlabel="时间（s）", ylabel="表面温度−中心温度（℃）",
+                title="径向温差的形成")
+    axes[1].plot(time_s, moisture[:, 0] - moisture[:, -1], color=PALETTE["secondary"])
+    axes[1].set(xlabel="时间（s）", ylabel="中心含水率−表面含水率（kg/kg）",
+                title="径向含水率差的形成")
+    export_sized(fig, "process_q1_surface_center_gap", (7.2, 3.6))
+
+
 def make_temperature_3d() -> None:
     time_s, radius_cm, field = load_matrix(RESULTS / "问题1_CN_完整温度.csv")
     stride = 10
@@ -129,12 +168,12 @@ def make_temperature_3d() -> None:
     ax.view_init(elev=28, azim=-128)
     colorbar = fig.colorbar(surface, ax=ax, shrink=0.68, pad=0.08)
     colorbar.set_label("温度（℃）")
-    export_sized(fig, "paper_q1_cn_temperature_3d", (7.2, 5.4))
+    export_sized(fig, "result_q1_cn_temperature_3d", (7.2, 5.4))
 
 
 def export_sized(fig: plt.Figure, name: str, size: tuple[float, float]) -> None:
     fig.set_size_inches(*size)
-    fig.savefig(FIGURES / f"{name}.svg")
+    fig.savefig(FIGURES / f"{name}.svg", metadata={"Date": None})
     fig.savefig(FIGURES / f"{name}.png", dpi=300)
     plt.close(fig)
 
@@ -142,11 +181,12 @@ def export_sized(fig: plt.Figure, name: str, size: tuple[float, float]) -> None:
 def main() -> None:
     apply_publication_style()
     FIGURES.mkdir(exist_ok=True)
-    make_triptych("问题1_CN_完整温度.csv", "温度", "℃", "coolwarm", "paper_q1_cn_temperature")
-    make_triptych("问题1_CN_完整水分浓度.csv", "干基含水率", "kg/kg", "viridis", "paper_q1_cn_moisture")
+    make_triptych("问题1_CN_完整温度.csv", "温度", "℃", "coolwarm", "result_q1_cn_temperature")
+    make_triptych("问题1_CN_完整水分浓度.csv", "干基含水率", "kg/kg", "viridis", "result_q1_cn_moisture")
     make_interpolation_figures()
     make_method_difference_figure()
     make_convergence_figure()
+    make_surface_center_gap_figure()
     make_temperature_3d()
 
 

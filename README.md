@@ -9,30 +9,32 @@
 - 原后向欧拉结果保留作对照。
 - CN 结果与参考截图的 35 个温度点最大差为 `5.58e-5 ℃`，水分最大差为 `6.46e-5 kg/kg`。
 
-详细说明见：[问题1_结果说明.md](问题1_结果说明.md) 和 [问题1_CN与后向欧拉差异分析.md](问题1_CN与后向欧拉差异分析.md)。
+论文手建议直接阅读：[问题一_论文手交付.md](问题一_论文手交付.md)。补充说明见：[问题1_结果说明.md](问题1_结果说明.md) 和 [问题1_CN与后向欧拉差异分析.md](问题1_CN与后向欧拉差异分析.md)。
 
 ## 论文正文推荐图片
 
 ### 温度场
 
-![温度场三联图](figures/paper_q1_cn_temperature.png)
+![温度场三联图](figures/result_q1_cn_temperature.png)
 
 二维时空图采用“低温蓝—高温红”渐变。另提供三维展示图：
 
-![温度场三维曲面](figures/paper_q1_cn_temperature_3d.png)
+![温度场三维曲面](figures/result_q1_cn_temperature_3d.png)
 
 建议论文正文使用二维三联图，三维曲面用于附录或答辩展示。
 
 ### 水分场
 
-![水分场三联图](figures/paper_q1_cn_moisture.png)
+![水分场三联图](figures/result_q1_cn_moisture.png)
 
 其余论文可用图片：
 
-- `figures/raw_q1_temperature_interpolation.*`：烘房温度插值比较。
-- `figures/raw_q1_moisture_interpolation.*`：烘房水分浓度插值比较。
+- `figures/raw_q1_temperature_interpolation_detailed.*`：烘房温度插值精细比较（含局部差值面板，正文推荐）。
+- `figures/raw_q1_moisture_interpolation_detailed.*`：烘房水分浓度插值精细比较（含局部差值面板，正文推荐）。
+- `figures/raw_q1_*_interpolation.*`：原始插值图，保留作对照。
 - `figures/process_q1_be_cn_difference.*`：BE 与 CN 差异。
 - `figures/process_q1_cn_convergence.*`：网格与时间步收敛。
+- `figures/process_q1_surface_center_gap.*`：表面—中心温差和含水率差的形成过程。
 
 每张图均提供 PNG（直接插入 Word）和 SVG（矢量编辑）两个版本。
 

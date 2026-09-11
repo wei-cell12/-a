@@ -83,9 +83,18 @@ def _xlsx_rows(path: Path, sheet_index: int = 0) -> list[list[object]]:
 
 
 def locate_inputs() -> tuple[Path, Path]:
+    """定位只读输入，禁止把 results 中的生成文件再次当作模板。"""
+    preferred_environment = ROOT / "data" / "附件1.xlsx"
+    preferred_template = ROOT / "data" / "附件3" / "result1.xlsx"
+    if preferred_environment.is_file() and preferred_template.is_file():
+        return preferred_environment, preferred_template
+
     environment = None
     template = None
     for path in ROOT.glob("**/*.xlsx"):
+        relative_parts = path.relative_to(ROOT).parts
+        if relative_parts and relative_parts[0].lower() == "results":
+            continue
         try:
             rows = _xlsx_rows(path)
         except Exception:
@@ -95,7 +104,7 @@ def locate_inputs() -> tuple[Path, Path]:
         if path.name.lower() == "result1.xlsx":
             template = path
     if environment is None or template is None:
-        raise FileNotFoundError("无法定位附件1或 result1.xlsx 模板")
+        raise FileNotFoundError("无法在只读数据目录定位附件1或 result1.xlsx 模板")
     return environment, template
 
 
