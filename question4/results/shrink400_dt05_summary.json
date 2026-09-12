@@ -1,0 +1,58 @@
+{
+  "config": {
+    "intervals": 400,
+    "mesh_power": 1.75,
+    "dt_s": 0.5,
+    "max_time_s": 259200.0,
+    "output_interval_s": 60.0,
+    "theta": 0.5,
+    "tolerance": 1e-10,
+    "max_iterations": 30,
+    "event_tolerance_s": 0.0001,
+    "post_temperature_c": 50.0,
+    "post_moisture": 0.05,
+    "thermal_lock_tolerance_c": 1e-08
+  },
+  "event": {
+    "time_s": 183929.08264160156,
+    "bracket_s": [
+      183929.0825805664,
+      183929.08264160156
+    ],
+    "max_C": 0.14999999998369373,
+    "argmax_node": 0,
+    "average_C": 0.1184057347775321,
+    "surface_C": 0.052620002305294615,
+    "radius_m": 0.012
+  },
+  "fixed_radius_control": false,
+  "mean_threshold_time_s": 125903.38344064423,
+  "diagnostics": {
+    "steps": 367859,
+    "runtime_s": 514.3970159,
+    "mean_picard_iterations": 3.4518606313832203,
+    "max_picard_iterations": 4,
+    "unconverged_steps": 0,
+    "max_temperature_algebraic_residual": 6.398375669243714e-09,
+    "max_moisture_algebraic_residual": 1.4277468096679513e-12,
+    "max_step_mass_balance_abs": 1.4127154307486123e-16,
+    "cumulative_reference_balance_abs": 2.7755575615628914e-13,
+    "radial_monotonicity_violations": 0,
+    "first_radial_violation": null,
+    "max_outward_radial_increase": 4.440892098500626e-15,
+    "max_outward_radial_increase_time_s": 346.0,
+    "max_center_vs_global_gap": 9.325873406851315e-15,
+    "negative_moisture_steps": 0,
+    "nonfinite_steps": 0,
+    "minimum_moisture": 0.05262092547910485,
+    "maximum_temperature_C": 50.0500055386158,
+    "minimum_dxi": 2.7950849718738624e-05,
+    "radius_positive": true,
+    "radius_nonincreasing": true,
+    "radius_data_end_s": 259200.0,
+    "fixed_radius_control": false,
+    "thermal_lock_enabled": true,
+    "thermal_lock_time_s": 28753.0,
+    "thermal_lock_deviation_c": 9.999752137446194e-09
+  }
+}

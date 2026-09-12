@@ -1,0 +1,83 @@
+{
+  "status": "PASS",
+  "checks_passed": 19,
+  "checks_total": 19,
+  "checks": {
+    "数值场无NaN或Inf": {
+      "passed": true,
+      "detail": "温度、水分、半径与时空坐标均为有限数"
+    },
+    "水分非负": {
+      "passed": true,
+      "detail": "最小值=0.052621124 kg/kg"
+    },
+    "半径始终为正且不增加": {
+      "passed": true,
+      "detail": "R: 2.0000 -> 1.2000 cm"
+    },
+    "全域阈值达标": {
+      "passed": true,
+      "detail": "t*=183938.126160 s，max(C)=0.149999999984 kg/kg"
+    },
+    "最湿点位于中心": {
+      "passed": true,
+      "detail": "事件时刻argmax节点=0"
+    },
+    "径向剖面单调": {
+      "passed": true,
+      "detail": "全部存储时刻均未出现由中心向表面的反向增湿"
+    },
+    "非线性迭代全部收敛": {
+      "passed": true,
+      "detail": "Picard最大迭代次数=4"
+    },
+    "离散方程残差": {
+      "passed": true,
+      "detail": "温度最大残差=5.684e-10，水分最大残差=1.326e-13"
+    },
+    "空间网格收敛": {
+      "passed": true,
+      "detail": "N=200与N=400的达标时刻相对差=4.917e-05"
+    },
+    "时间步长收敛": {
+      "passed": true,
+      "detail": "dt=0.5 s与0.25 s的达标时刻差=0.000366 s"
+    },
+    "4小时状态连续": {
+      "passed": true,
+      "detail": "边界条件切换前后未重置内部温湿度场"
+    },
+    "收缩效应方向合理": {
+      "passed": true,
+      "detail": "收缩模型51.0939 h，固定半径对照129.8556 h"
+    },
+    "result4表格尺寸": {
+      "passed": true,
+      "detail": "实际3067行×22列（含表头）"
+    },
+    "论文表格尺寸": {
+      "passed": true,
+      "detail": "实际10行×6列（含表头）"
+    },
+    "常规输出间隔60秒": {
+      "passed": true,
+      "detail": "常规行数=3065，末行另列临界时刻183938.126160 s"
+    },
+    "移动表面外固定点留空": {
+      "passed": true,
+      "detail": "所有超出当前半径的固定物理位置均为空"
+    },
+    "独立药材表面列完整": {
+      "passed": true,
+      "detail": "每个输出时刻均含移动表面水分值"
+    },
+    "表头固定位置正确": {
+      "passed": true,
+      "detail": "固定距离为0.0--1.9 cm，步长0.1 cm，另设药材表面列"
+    },
+    "XLSX文件结构完整": {
+      "passed": true,
+      "detail": "result4.xlsx:OK；q4_result_table.xlsx:OK；q4_convergence.xlsx:OK"
+    }
+  }
+}
