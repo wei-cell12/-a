@@ -53,17 +53,11 @@
 - `openpyxl` 未安装，沙箱内外两次 pip 安装均因网络/代理失败（退出码 1）；改用项目内 OOXML 模板写入，不影响交付。
 - 单独工具调用中 `Q:` 映射不会跨进程保留，曾导致一次 `Set-Location` 失败（退出码 1）；后续每条命令内重新执行 `subst`。
 
-## 输入资料
+## 输入资料、模型合同与验证状态
 
-待审计。
-
-## 模型合同
-
-待确认。
-
-## 运行与验证记录
-
-待补充。
+- 输入资料已审计：附件 1、第三问结果模板及两份交接文档均已核对；输入哈希见 `results/q3_repro_manifest.json`。
+- 模型合同已冻结：固定半径圆柱、问题二变物性热湿模型、4 h 后稳定边界、全域最大含水率阈值事件。
+- 运行与验证已完成：六组收敛计算、正式结果导出、图件审计及 `code/verify_q3.py` 自动检查均已通过。
 # 最终交付记录
 
 - 正式临界时刻：`206906.432617 s = 57.474009 h`；若按整数秒执行，取 `206907 s`。
@@ -71,3 +65,20 @@
 - 全域最大含水率在中心取得；平均含水率判据会提前 `21.4474 h` 停机，因此不能代替全域判据。
 - 自动验证 `code/verify_q3.py` 全部通过；9 张中文论文候选图通过 PNG/SVG 文件检查和严格图件审计，SVG 不含嵌入位图。
 - `code/run_all_q3.py` 是干净目录下的唯一全流程复现入口，覆盖六组求解、导出、绘图、哈希刷新和验证。
+
+## 论文手主张—证据映射（W1 输入）
+
+| 论文主张 | 精确证据路径 | 章节与编号落点 | 正式图表及首次引用 |
+|---|---|---|---|
+| 第三问在固定半径 2 cm 下承接问题二变物性热湿模型 | 问题二权威正文 `../question2/Q2_paper_section.md` 第 3 节；问题二代码 `../question2/code/q2_solver.py`；第三问代码 `code/q3_solver.py::{volumetric_heat_capacity,conductivity,diffusivity}` | 第 2 节；式 (1)–(5) | 第 2 节不单独插图 |
+| 4 h 后采用 50 ℃、0.05 kg/kg 稳定环境是延拓假设 | `code/q3_solver.py::environment` 与正式配置 `results/optimized400_dt05_summary.json::config::{post_temperature_c,post_moisture}` | 第 2.3 节；式 (8) | 第 2.3 节首次引用图 1 `raw_q3_boundary_temperature.png` 与图 2 `raw_q3_boundary_moisture.png` |
+| 停止条件是全域最大含水率首次低于 0.15 kg/kg | `results/optimized400_dt05_summary.json::event`；`code/q3_solver.py::{simulate,locate_event}` | 第 2.2 节；式 (6)–(7) | 第 4.1 节首次引用图 4 `result_q3_Cmax_time.png` |
+| 连续临界时刻为 206906.432617 s，即 57.474009 h；按整秒执行取 206907 s | `results/q3_diagnostics.json::{critical_time_s,critical_time_h,strict_integer_second_s,event_max_C}` | 第 4.1 节结论框 | 图 4；表 1 `q3_result_table.csv` |
+| 全过程最湿点位于中心，中心湿芯控制总时长 | `results/optimized400_dt05_summary.json::event::argmax_node=0`、`diagnostics::{radial_monotonicity_violations,max_center_vs_global_gap}` | 第 4.2 节 | 图 5 `result_q3_radial_profiles.png`、图 6 `result_q3_moisture_field.png`，均在第 4.2 节首次引用 |
+| 平均含水率不能代替全域判据 | `results/q3_diagnostics.json::{mean_threshold_time_h,premature_stop_gap_h}`；`code/q3_solver.py::area_average` | 第 4.3 节；式 (15) | 图 7 `process_q3_average_vs_max.png` 在第 4.3 节首次引用 |
+| 正式离散对事件时刻已基本收敛 | `results/q3_convergence.csv`；`results/q3_final_summary.xlsx` | 第 5.1 节；表 2 | 图 8 `process_q3_convergence.png` 在第 5.1 节首次引用 |
+| 在 N=400、dt=0.5 s 对照下，p=1.75 网格相较 p=2 消除可检出的表层交替振荡，事件时刻仅变 1.8539 s | `results/q3_convergence.csv` 对应两行；`results/optimized400_dt05_summary.json::diagnostics::minimum_dr_m` | 第 3.1 节；式 (9) | 图 3 `process_q3_mesh_spacing.png` 在第 3.1 节首次引用 |
+| 非线性迭代全部收敛，未出现负值或非有限值，代数残差和累计质量闭合误差足够小 | `results/q3_diagnostics.json::formal_run`；`results/q3_verification_report.json::checks` | 第 5.2 节；表 3 | 不单独成图 |
+| 正式解在 3 h 的五点与问题二四位小数表一致，最大绝对差 3.7116e-5 kg/kg | `results/optimized400_dt05_fields.npz` 中 `time_s=10800` 的五点线性提取值 `(1.76617802,1.71653107,1.57019723,1.33326288,1.00812900)`；参考 `../question2/Q2_paper_section.md` 第 5.2 节表；对四位小数参考值最大差 `3.7116e-5` | 第 5.3 节 | 表 4，首次且仅在第 5.3 节引用 |
+
+拟用正文结构：问题分析→模型承接、环境与判据→非均匀有限体积/CN/Picard→结果→判据辨析→收敛与可靠性→结论与边界。正文只引用现有真实结果，不把数值检验写成实验验证。
