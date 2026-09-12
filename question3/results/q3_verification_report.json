@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "checks": {
+    "finite_fields": true,
+    "event_all_points_below_threshold": true,
+    "event_argmax_is_center": true,
+    "stored_radial_monotone": true,
+    "regular_output_interval_60s": true,
+    "time_refinement_difference_below_1s": true,
+    "space_refinement_relative_below_1e_3": true,
+    "no_unconverged_steps": true,
+    "no_negative_or_nonfinite_steps": true,
+    "xlsx_result3.xlsx_valid": true,
+    "xlsx_q3_full_result.xlsx_valid": true,
+    "xlsx_q3_result_table.xlsx_valid": true,
+    "xlsx_q3_final_summary.xlsx_valid": true,
+    "figures_raw_three_png_svg": true,
+    "figures_process_three_png_svg": true,
+    "figures_result_three_png_svg": true
+  },
+  "event_time_s": 206906.4326171875,
+  "event_time_h": 57.47400906032986,
+  "xlsx_shapes": {
+    "result3.xlsx": [
+      3450,
+      22,
+      22
+    ],
+    "q3_full_result.xlsx": [
+      3450,
+      22,
+      22
+    ],
+    "q3_result_table.xlsx": [
+      11,
+      6,
+      6
+    ],
+    "q3_final_summary.xlsx": [
+      7,
+      8,
+      8
+    ]
+  }
+}

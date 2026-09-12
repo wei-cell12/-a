@@ -1,0 +1,42 @@
+{
+  "config": {
+    "intervals": 20,
+    "mesh_power": 2.0,
+    "dt_s": 2.0,
+    "max_time_s": 600.0,
+    "output_interval_s": 60.0,
+    "theta": 0.5,
+    "tolerance": 1e-10,
+    "max_iterations": 30,
+    "event_tolerance_s": 0.0001,
+    "post_temperature_c": 50.0,
+    "post_moisture": 0.05,
+    "thermal_lock_tolerance_c": 1e-08
+  },
+  "event": null,
+  "mean_threshold_time_s": null,
+  "diagnostics": {
+    "steps": 300,
+    "runtime_s": 0.42245180000000004,
+    "mean_picard_iterations": 4.0,
+    "max_picard_iterations": 4,
+    "unconverged_steps": 0,
+    "max_temperature_algebraic_residual": 1.170342705161118e-12,
+    "max_moisture_algebraic_residual": 3.9968028886505635e-15,
+    "max_step_mass_balance_abs": 2.592327394412841e-16,
+    "cumulative_mass_balance_abs": 1.8041124150158794e-15,
+    "radial_monotonicity_violations": 0,
+    "first_radial_violation": null,
+    "max_outward_radial_increase": 5.773159728050814e-15,
+    "max_outward_radial_increase_time_s": 70.0,
+    "max_center_vs_global_gap": 6.217248937900877e-15,
+    "negative_moisture_steps": 0,
+    "nonfinite_steps": 0,
+    "minimum_moisture": 1.9347628080233081,
+    "maximum_temperature_C": 29.69773043353357,
+    "minimum_dr_m": 4.999999999999796e-05,
+    "thermal_lock_enabled": true,
+    "thermal_lock_time_s": null,
+    "thermal_lock_deviation_c": null
+  }
+}

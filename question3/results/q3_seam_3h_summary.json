@@ -1,0 +1,35 @@
+{
+  "config": {
+    "intervals": 200,
+    "mesh_power": 2,
+    "dt_s": 0.5,
+    "max_time_s": 10800,
+    "output_interval_s": 1800,
+    "theta": 0.5,
+    "tolerance": 1e-10,
+    "max_iterations": 30,
+    "event_tolerance_s": 0.0001,
+    "post_temperature_c": 50.0,
+    "post_moisture": 0.05
+  },
+  "event": null,
+  "mean_threshold_time_s": null,
+  "diagnostics": {
+    "steps": 21600,
+    "runtime_s": 27.3221229,
+    "mean_picard_iterations": 3.0167592592592594,
+    "max_picard_iterations": 4,
+    "unconverged_steps": 0,
+    "max_algebraic_residual": 7.28341254303438e-09,
+    "max_step_mass_balance_abs": 7.808627334147944e-16,
+    "cumulative_mass_balance_abs": 8.688605390716475e-13,
+    "radial_monotonicity_violations": 0,
+    "first_radial_violation": null,
+    "max_center_vs_global_gap": 6.661338147750939e-15,
+    "negative_moisture_steps": 0,
+    "nonfinite_steps": 0,
+    "minimum_moisture": 1.0081311484962379,
+    "maximum_temperature_C": 49.96641336706494,
+    "minimum_dr_m": 5.000000000005e-07
+  }
+}
